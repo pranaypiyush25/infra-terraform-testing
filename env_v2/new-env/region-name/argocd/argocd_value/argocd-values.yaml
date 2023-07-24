@@ -1315,6 +1315,10 @@ server:
     #   g, subject, inherited-subject
     # See https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/rbac.md for additional information.
     policy.csv: |
+      p, role:qa, applications, *, */*, allow
+      p, role:qa, projects, *, *, allow
+      p, role:qa, repositories, *, *, allow
+      g, bot_user, role:qa
      # p, role:qa,  applications, *, */*, allow
     #  g, celigo_user, role:qa
     #   # Grant all members of the group 'my-org:team-alpha; the ability to sync apps in 'my-project'
