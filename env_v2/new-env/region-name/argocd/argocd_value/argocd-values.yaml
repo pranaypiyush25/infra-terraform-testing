@@ -1247,6 +1247,7 @@ server:
           args: ["kustomize build . | argocd-vault-plugin generate -"]
     # Argo CD's externally facing base URL (optional). Required when configuring SSO
     accounts.celigo_user:  login
+    accounts.bot_user: apiKey
     url: ""
     # Argo CD instance label key
     application.instanceLabelKey: argocd.argoproj.io/instance
