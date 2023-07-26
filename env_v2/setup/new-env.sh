@@ -46,7 +46,7 @@ sed "s|<new-env>|$new_env|" ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_te
 sed "s|<region-name>|$aws_region_name|" ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
 
 # Check if 'public_cluster' variable is empty
-if [[ -z $public_cluster ]]; then
+if [[ -z $is_public_cluster ]]; then
   echo "public_cluster is not set in apply.conf file."
   exit 1
 else
