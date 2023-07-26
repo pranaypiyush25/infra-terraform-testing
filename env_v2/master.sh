@@ -98,4 +98,10 @@ cd setup
 cd ..
 echo "#########################"
 
+echo ""
+chmod +x apply.sh
+./apply.sh
+cd ..
+echo "#########################"
+
 

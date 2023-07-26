@@ -21,13 +21,6 @@ cp -r new-env/* $new_env
 cd $new_env
 mv region-name $aws_region_name
 echo ""
-echo "#########################"
-echo "pushig $new_env files to git"
-git config --global user.name "iac-setup"
-git config --global user.email iac-setup
-git add ../$new_env
-git commit -m "adding $new_env"
-git push
 
 echo "#########################"
 echo "*"
@@ -64,7 +57,6 @@ fi
 # Check if 'existing_vpc_id' variable is empty
 if [[ -z $existing_vpc_id ]]; then
   echo "existing_vpc_id is not set in apply.conf file."
-  exit 1
 else
   sed "s|existing_vpc_id *= *\"existing_vpc_id = |$existing_vpc_id|" ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
 fi
@@ -72,7 +64,6 @@ fi
 # Check if 'existing_igw_id' variable is empty
 if [[ -z $existing_igw_id ]]; then
   echo "existing_igw_id is not set in apply.conf file."
-  exit 1
 else
   sed "s|existing_igw_id *= *\"existing_igw_id = |$existing_igw_id|" ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
 fi
@@ -151,6 +142,13 @@ else
   awk -v workernode_cidr="$workernode_cidr" '/cluster_AZ[[:blank:]]*=/{gsub(/\[.*\]/, workernode_cidr)} 1' ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
 fi 
 
+echo "#########################"
+echo "pushig $new_env files to git"
+git config --global user.name "iac-setup"
+git config --global user.email iac-setup
+git add ../$new_env
+git commit -m "adding $new_env"
+git push
 
 echo "*"
 echo "*******"
