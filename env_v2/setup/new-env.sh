@@ -43,7 +43,7 @@ if [[ -z $is_public_cluster ]]; then
   echo "public_cluster is not set in apply.conf file."
   exit 1
 else
-  sed "s|public_cluster *= *\"public_cluster = |$is_public_cluster|" ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
+  awk -v public_cluster="$is_public_cluster" '/public_cluster[[:blank:]]*=/{gsub(/".*"/, "\"" public_cluster "\"")} 1' ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
 fi
 
 # Check if 'create_app_new_bucket' variable is empty
@@ -51,21 +51,21 @@ if [[ -z $create_app_new_bucket ]]; then
   echo "create_app_env_bucket is not set in apply.conf file."
   exit 1
 else
-  sed "s|create_app_env_bucket *= *\"create_app_env_bucket = |$create_app_new_bucket|" ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
+  awk -v create_app_env_bucket="$create_app_new_bucket" '/create_app_env_bucket[[:blank:]]*=/{gsub(/".*"/, "\"" create_app_env_bucket "\"")} 1' ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
 fi
 
 # Check if 'existing_vpc_id' variable is empty
 if [[ -z $existing_vpc_id ]]; then
   echo "existing_vpc_id is not set in apply.conf file."
 else
-  sed "s|existing_vpc_id *= *\"existing_vpc_id = |$existing_vpc_id|" ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
+  awk -v existing_vpc_id="$existing_vpc_id" '/existing_vpc_id[[:blank:]]*=/{gsub(/".*"/, "\"" existing_vpc_id "\"")} 1' ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
 fi
 
 # Check if 'existing_igw_id' variable is empty
 if [[ -z $existing_igw_id ]]; then
   echo "existing_igw_id is not set in apply.conf file."
 else
-  sed "s|existing_igw_id *= *\"existing_igw_id = |$existing_igw_id|" ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
+  awk -v existing_igw_id="$existing_igw_id" '/existing_igw_id[[:blank:]]*=/{gsub(/".*"/, "\"" existing_igw_id "\"")} 1' ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
 fi
 
 # Check if 'vpc_cidr_block' variable is empty
@@ -73,7 +73,7 @@ if [[ -z $vpc_cidr_block ]]; then
   echo "vpc_cidr_block is not set in apply.conf file."
   exit 1
 else
-  sed "s|vpc_cidr_block *= *\"vpc_cidr_block = |$vpc_cidr_block|" ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
+  awk -v vpc_cidr_block="$vpc_cidr_block" '/vpc_cidr_block[[:blank:]]*=/{gsub(/".*"/, "\"" vpc_cidr_block "\"")} 1' ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
 fi
 
 # Check if 'create_vpc' variable is empty
@@ -81,7 +81,7 @@ if [[ -z $create_vpc ]]; then
   echo "create_vpc is not set in apply.conf file."
   exit 1
 else
-  sed "s|create_vpc *= *\"create_vpc = |$create_vpc|" ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
+  awk -v create_vpc="$create_vpc" '/create_vpc[[:blank:]]*=/{gsub(/".*"/, "\"" create_vpc "\"")} 1' ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
 fi
 
 # Check if 'create_igw' variable is empty
@@ -89,7 +89,7 @@ if [[ -z $create_igw ]]; then
   echo "create_igw is not set in apply.conf file."
   exit 1
 else
-  sed "s|create_igw *= *\"create_igw = |$create_igw|" ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
+  awk -v create_igw="$create_igw" '/create_igw[[:blank:]]*=/{gsub(/".*"/, "\"" create_igw "\"")} 1' ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
 fi
 
 
@@ -97,49 +97,49 @@ if [[ -z $cluster_AZ ]]; then
   echo "cluster_AZ is not set in apply.conf file."
   exit 1
 else
-  awk -v cluster_AZ="$cluster_AZ" '/cluster_AZ[[:blank:]]*=/{gsub(/\[.*\]/, cluster_AZ)} 1' ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
+  awk -v cluster_AZ="$cluster_AZ" '/cluster_AZ[[:blank:]]*=/{gsub(/\[.*\]/, cluster_AZ)} 1' ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl ./terragrunt.hcl
 fi
 
 if [[ -z $cluster_EIP ]]; then
   echo "cluster_EIP is not set in apply.conf file."
   exit 1
 else
-  awk -v cluster_EIP="$cluster_EIP" '/cluster_AZ[[:blank:]]*=/{gsub(/\[.*\]/, cluster_EIP)} 1' ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
+  awk -v cluster_EIP="$cluster_EIP" '/cluster_EIP[[:blank:]]*=/{gsub(/\[.*\]/, cluster_EIP)} 1' ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
 fi
 
 if [[ -z $worker_AZ ]]; then
   echo "cluster_AZ is not set in apply.conf file."
   exit 1
 else
-  awk -v worker_AZ="$worker_AZ" '/cluster_AZ[[:blank:]]*=/{gsub(/\[.*\]/, worker_AZ)} 1' ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
+  awk -v worker_AZ="$worker_AZ" '/worker_AZ[[:blank:]]*=/{gsub(/\[.*\]/, worker_AZ)} 1' ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
 fi
 
 if [[ -z $worker_EIP ]]; then
   echo "worker_EIP is not set in apply.conf file."
   exit 1
 else
-  awk -v worker_EIP="$worker_EIP" '/cluster_AZ[[:blank:]]*=/{gsub(/\[.*\]/, worker_EIP)} 1' ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
+  awk -v worker_EIP="$worker_EIP" '/worker_EIP[[:blank:]]*=/{gsub(/\[.*\]/, worker_EIP)} 1' ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
 fi
 
 if [[ -z $public_nat_cidr ]]; then
   echo "public_nat_cidr is not set in apply.conf file."
   exit 1
 else
-  awk -v public_nat_cidr="$public_nat_cidr" '/cluster_AZ[[:blank:]]*=/{gsub(/\[.*\]/, public_nat_cidr)} 1' ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
+  awk -v public_nat_cidr="$public_nat_cidr" '/public_nat_cidr[[:blank:]]*=/{gsub(/\[.*\]/, public_nat_cidr)} 1' ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
 fi
 
 if [[ -z $cluster_cidr ]]; then
   echo "cluster_cidr is not set in apply.conf file."
   exit 1
 else
-  awk -v cluster_cidr="$cluster_cidr" '/cluster_AZ[[:blank:]]*=/{gsub(/\[.*\]/, cluster_cidr)} 1' ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
+  awk -v cluster_cidr="$cluster_cidr" '/cluster_cidr[[:blank:]]*=/{gsub(/\[.*\]/, cluster_cidr)} 1' ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
 fi
 
 if [[ -z $workernode_cidr ]]; then
   echo "workernode_cidr is not set in apply.conf file."
   exit 1
 else
-  awk -v workernode_cidr="$workernode_cidr" '/cluster_AZ[[:blank:]]*=/{gsub(/\[.*\]/, workernode_cidr)} 1' ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
+  awk -v workernode_cidr="$workernode_cidr" '/workernode_cidr[[:blank:]]*=/{gsub(/\[.*\]/, workernode_cidr)} 1' ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
 fi 
 
 echo "#########################"
