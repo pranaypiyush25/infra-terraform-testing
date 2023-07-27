@@ -44,11 +44,11 @@ locals {
       name_prefix                          = "automate-aws-eks-us-west-1"
       cluster_AZ                           = ["us-west-1a", "us-west-1c"],         # list the cluster AZ,      i.e   "ap-south-1a","ap-south-1b"
       cluster_EIP                          = [ "54.241.185.19", "52.52.171.115"]         # list the exisitng EIPs,   i.e   "20.20.20.20", "30.30.30.30"
-      worker_AZ                            = ["us-west-1a", "us-west-1c"]         # list the worker AZ,       i.e   "ap-south-1a","ap-south-1b"
-      worker_EIP                           = [ "13.52.8.23", "54.241.19.119" ]         # list the exisitng EIPs,   i.e   "20.20.20.20", "30.30.30.30"
+      worker_AZ                            = ["us-west-1a", "us-west-1c", "us-west-1c"]         # list the worker AZ,       i.e   "ap-south-1a","ap-south-1b"
+      worker_EIP                           = [ "13.52.8.23", "54.241.19.119", "54.215.42.4" ]         # list the exisitng EIPs,   i.e   "20.20.20.20", "30.30.30.30"
       public_nat_cidr                      = ["172.31.248.0/24", "172.31.249.0/24"]         # list the Public CIDR,     i.e   "172.31.250.0/24", "172.31.251.0/24"
       cluster_cidr                         = ["172.31.148.0/24", "172.31.149.0/24"]         # list the Cluster CIDR,    i.e   "172.31.120.0/24", "172.31.121.0/24"
-      workernode_cidr                      = ["172.31.158.0/24", "172.31.159.0/24"]         # list the Worker CIDR,     i.e   "172.31.130.0/24", "172.31.131.0/24"
+      workernode_cidr                      = ["172.31.158.0/24", "172.31.159.0/24","172.31.157.0/24"]         # list the Worker CIDR,     i.e   "172.31.130.0/24", "172.31.131.0/24"
     }
     tags = {  
       SERVICENAME    = "automate"
