@@ -6,10 +6,10 @@ remote_state {
   }
   config = {
 
-    bucket = "integrator-<new-env>-terragrunt-terraform-eks-state-<region-name>" # Bucket Name to Store State file
+    bucket = "integrator-automate-terragrunt-terraform-eks-state-us-west-1" # Bucket Name to Store State file
 
     key = "${path_relative_to_include()}/terraform.tfstate"
-    region         = "<region-name>" # Bucket Region
+    region         = "us-west-1" # Bucket Region
     encrypt        = true
     
   }
@@ -18,13 +18,13 @@ remote_state {
 locals {
 
   #global
-  env                    = "<new-env>"
-  region                 = "<region-name>"
+  env                    = "automate"
+  region                 = "us-west-1"
   public_cluster         = "<isPublicCluster>" # true/false
   k8s_version            = "1.23"
-  cluster_name           = "<new-env>-aws-eks-<region-name>"
+  cluster_name           = "automate-aws-eks-us-west-1"
   global_tags            = {
-    "Environment" = "<new-env>-aws-eks-<region-name>"
+    "Environment" = "automate-aws-eks-us-west-1"
   }
 
   alertgroup             = "devops_team"
@@ -41,8 +41,8 @@ locals {
     create_vpc        = "true"   # false if no new-vpc/default-vpc needed
     create_igw        = "true"   # false if no new-vpc/default-vpc needed
     subnet = {
-      name_prefix                          = "<new-env>-aws-eks-<region-name>"
-      cluster_AZ                           = [ ]         # list the cluster AZ,      i.e   "ap-south-1a","ap-south-1b"
+      name_prefix                          = "automate-aws-eks-us-west-1"
+      cluster_AZ                           = ["172.31.158.0/24", "172.31.159.0/24"],         # list the cluster AZ,      i.e   "ap-south-1a","ap-south-1b"
       cluster_EIP                          = [ ]         # list the exisitng EIPs,   i.e   "20.20.20.20", "30.30.30.30"
       worker_AZ                            = [ ]         # list the worker AZ,       i.e   "ap-south-1a","ap-south-1b"
       worker_EIP                           = [ ]         # list the exisitng EIPs,   i.e   "20.20.20.20", "30.30.30.30"
@@ -51,7 +51,7 @@ locals {
       workernode_cidr                      = [ ]         # list the Worker CIDR,     i.e   "172.31.130.0/24", "172.31.131.0/24"
     }
     tags = {  
-      SERVICENAME    = "<new-env>"
+      SERVICENAME    = "automate"
     }
   }
   
@@ -66,7 +66,7 @@ locals {
       ami_id                               = "ami-0d9c28c76ecc3d211"
       root_volume_size                     = "100"
       root_volume_type                     = "gp3"
-      worker_asg_role                      = "AWSServiceRoleForAutoScaling_<new-env>"
+      worker_asg_role                      = "AWSServiceRoleForAutoScaling_automate"
       term_policy                          = "OldestLaunchConfiguration"
       kubelet_args                         = "--use-max-pods 205"
     }  
@@ -79,7 +79,7 @@ locals {
       ami_id                               = "ami-0d9c28c76ecc3d211"
       root_volume_size                     = "100"
       root_volume_type                     = "gp3"
-      worker_asg_role                      = "AWSServiceRoleForAutoScaling_<new-env>"
+      worker_asg_role                      = "AWSServiceRoleForAutoScaling_automate"
       term_policy                          = "OldestLaunchConfiguration"
       kubelet_args                         = "--use-max-pods 205 --kubelet-extra-args '--register-with-taints=affinity=foundational_layer:NoSchedule'"
     }
@@ -97,14 +97,14 @@ locals {
     access = {
       name = ""
       tags = {
-        Name = "MongoDB Atlas Access for <new-env>"
+        Name = "MongoDB Atlas Access for automate"
       }
     }
     org_id = "5d1b2061d5ec130eb8a22c12"
     project = {
-      name = "<new-env>"
+      name = "automate"
       cluster = {
-        name = "<new-env>"
+        name = "automate"
         mongo_db_major_version = "4.4"
         provider_instance_size_name = "M10"
         disk_size_gb = 40
@@ -114,16 +114,16 @@ locals {
 
   elasticache = {
     subnet_groups = {
-      name = "elasticache-<new-env>"
+      name = "elasticache-automate"
     }
     redis-server = {
-      name = "redis-server-<new-env>"
+      name = "redis-server-automate"
       tags = {
-        Name = "ElasticCache Redis Server for <new-env>"
+        Name = "ElasticCache Redis Server for automate"
       }
     }
     replication_groups = {
-      id = "redis-server-<new-env>"
+      id = "redis-server-automate"
       num_node_groups = 1
       replicas_per_node_group = 1
       port = 6379
@@ -141,13 +141,13 @@ locals {
   }
 
   opensearch = {
-    domain_name = "<new-env>"
+    domain_name = "automate"
     instance_type = "m6g.large.search"
     instance_count = 2
     engine_version = "OpenSearch_2.5"
     volume_size = 100
     tags = {
-      Name = "OpenSearch Service for <new-env>"
+      Name = "OpenSearch Service for automate"
     }
   }
 
