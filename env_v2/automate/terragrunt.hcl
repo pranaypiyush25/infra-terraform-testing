@@ -20,7 +20,7 @@ locals {
   #global
   env                    = "automate"
   region                 = "us-west-1"
-  public_cluster         = "<isPublicCluster>" # true/false
+  public_cluster         = "true" # true/false
   k8s_version            = "1.23"
   cluster_name           = "automate-aws-eks-us-west-1"
   global_tags            = {
@@ -36,19 +36,19 @@ locals {
   vpc = {
     existing_vpc_id   = ""       # provide vpc-id to use existing vpc 
     existing_igw_id   = ""       # provide igw-id to use existing vpc
-    default_vpc       = "false"  # true to use default_vpc
-    vpc_cidr_block    = ""       # must need to be provided
-    create_vpc        = "true"   # false if no new-vpc/default-vpc needed
-    create_igw        = "true"   # false if no new-vpc/default-vpc needed
+    default_vpc       = "true"  # true to use default_vpc
+    vpc_cidr_block    = "172.31.0.0/16"       # must need to be provided
+    create_vpc        = "false"   # false if no new-vpc/default-vpc needed
+    create_igw        = "false"   # false if no new-vpc/default-vpc needed
     subnet = {
       name_prefix                          = "automate-aws-eks-us-west-1"
-      cluster_AZ                           = ["172.31.158.0/24", "172.31.159.0/24"],         # list the cluster AZ,      i.e   "ap-south-1a","ap-south-1b"
-      cluster_EIP                          = [ ]         # list the exisitng EIPs,   i.e   "20.20.20.20", "30.30.30.30"
-      worker_AZ                            = [ ]         # list the worker AZ,       i.e   "ap-south-1a","ap-south-1b"
-      worker_EIP                           = [ ]         # list the exisitng EIPs,   i.e   "20.20.20.20", "30.30.30.30"
-      public_nat_cidr                      = [ ]         # list the Public CIDR,     i.e   "172.31.250.0/24", "172.31.251.0/24"
-      cluster_cidr                         = [ ]         # list the Cluster CIDR,    i.e   "172.31.120.0/24", "172.31.121.0/24"
-      workernode_cidr                      = [ ]         # list the Worker CIDR,     i.e   "172.31.130.0/24", "172.31.131.0/24"
+      cluster_AZ                           = ["us-east-1b", "us-east-1c"],         # list the cluster AZ,      i.e   "ap-south-1a","ap-south-1b"
+      cluster_EIP                          = [ "54.241.185.19", "52.52.171.115"]         # list the exisitng EIPs,   i.e   "20.20.20.20", "30.30.30.30"
+      worker_AZ                            = ["us-east-1b", "us-east-1c"]         # list the worker AZ,       i.e   "ap-south-1a","ap-south-1b"
+      worker_EIP                           = [ "13.52.8.23", "54.241.19.119" ]         # list the exisitng EIPs,   i.e   "20.20.20.20", "30.30.30.30"
+      public_nat_cidr                      = ["172.31.248.0/24", "172.31.249.0/24"]         # list the Public CIDR,     i.e   "172.31.250.0/24", "172.31.251.0/24"
+      cluster_cidr                         = ["172.31.148.0/24", "172.31.149.0/24"]         # list the Cluster CIDR,    i.e   "172.31.120.0/24", "172.31.121.0/24"
+      workernode_cidr                      = ["172.31.158.0/24", "172.31.159.0/24"]         # list the Worker CIDR,     i.e   "172.31.130.0/24", "172.31.131.0/24"
     }
     tags = {  
       SERVICENAME    = "automate"
@@ -56,7 +56,7 @@ locals {
   }
   
   worker = {
-    keyname                               = "<key-pair-name>"     # create ssh key name and update
+    keyname                               = "integrator-qa-automate"     # create ssh key name and update
     generic = {
       instance_type                        = "t3.large"
       asg_prefix                           = "generic"
@@ -89,8 +89,9 @@ locals {
   argocd = {
     version_argocd              = "5.5.3"
     istio_apply_module          = "false"
-    foundationlayer_namespace   = [ { "namespace_name" : "argocd" }] 
-    app_namespace               = [] #please provide if extra namespaces are required
+    foundationlayer_namespace   = [{ "namespace_name" : "argocd" },{ "namespace_name" : "istio-system" },{ "namespace_name" : "istio-gateway" }]  
+    app_namespace               = [{"namespace_name" : "core" },{ "namespace_name" : "io" },
+                                { "namespace_name" : "ia" },{ "namespace_name" : "istio-ingress" },{ "namespace_name" : "ui" }, { "namespace_name" : "testing" }] #please provide if extra namespaces are required
   }
 
   mongodbatlas = {
@@ -152,7 +153,7 @@ locals {
   }
 
   secrets_manager = {
-    name = <secrets-store-name>
+    name = "<secrets-store-name>"
   }
 
   private_hosted_zone = {
