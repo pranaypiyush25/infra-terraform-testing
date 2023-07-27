@@ -42,9 +42,9 @@ locals {
     create_igw        = "false"   # false if no new-vpc/default-vpc needed
     subnet = {
       name_prefix                          = "automate-aws-eks-us-west-1"
-      cluster_AZ                           = ["us-east-1a", "us-east-1c"],         # list the cluster AZ,      i.e   "ap-south-1a","ap-south-1b"
+      cluster_AZ                           = ["us-west-1a", "us-west-1c"],         # list the cluster AZ,      i.e   "ap-south-1a","ap-south-1b"
       cluster_EIP                          = [ "54.241.185.19", "52.52.171.115"]         # list the exisitng EIPs,   i.e   "20.20.20.20", "30.30.30.30"
-      worker_AZ                            = ["us-east-1a", "us-east-1c"]         # list the worker AZ,       i.e   "ap-south-1a","ap-south-1b"
+      worker_AZ                            = ["us-west-1a", "us-west-1c"]         # list the worker AZ,       i.e   "ap-south-1a","ap-south-1b"
       worker_EIP                           = [ "13.52.8.23", "54.241.19.119" ]         # list the exisitng EIPs,   i.e   "20.20.20.20", "30.30.30.30"
       public_nat_cidr                      = ["172.31.248.0/24", "172.31.249.0/24"]         # list the Public CIDR,     i.e   "172.31.250.0/24", "172.31.251.0/24"
       cluster_cidr                         = ["172.31.148.0/24", "172.31.149.0/24"]         # list the Cluster CIDR,    i.e   "172.31.120.0/24", "172.31.121.0/24"
