@@ -18,7 +18,7 @@ remote_state {
 locals {
 
   #global
-  env                    = "automate"
+  env                    = "devops"
   region                 = "us-west-1"
   public_cluster         = "true" # true/false
   k8s_version            = "1.23"
