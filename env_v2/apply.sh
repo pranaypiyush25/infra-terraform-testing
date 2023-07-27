@@ -19,6 +19,12 @@ echo "applying iam_role module"
 sleep 5
 cd iam_role
 terragrunt apply --auto-approve --terragrunt-non-interactive
+if [ $? -eq 0 ]; then
+  echo "Terragrunt apply was successful."
+else
+  echo "Terragrunt apply failed at iam provisioning"
+  exit 1
+fi
 cd ..
 
 
@@ -26,6 +32,12 @@ echo "applying vpc module"
 sleep 5
 cd vpc
 terragrunt apply --auto-approve
+if [ $? -eq 0 ]; then
+  echo "Terragrunt apply was successful."
+else
+  echo "Terragrunt apply failed at vpc provisioning"
+  exit 1
+fi
 
 echo "getting subnet ids for istio-ingress"
 sleep 5
@@ -44,6 +56,12 @@ echo "applying eks_controlplane module"
 sleep 5
 cd eks/eks_controlplane
 terragrunt apply --auto-approve
+if [ $? -eq 0 ]; then
+  echo "Terragrunt apply was successful."
+else
+  echo "Terragrunt apply failed at eks_controlplane provisioning"
+  exit 1
+fi
 cd ../..
 
 echo "applying eks_worker module"
@@ -54,6 +72,12 @@ for dir in $dirs; do
 if [ -d "$dir" ]; then
     cd "$dir"
     terragrunt apply --auto-approve
+    if [ $? -eq 0 ]; then
+      echo "Terragrunt apply was successful."
+    else
+      echo "Terragrunt apply failed at eks_worker provisioning"
+      exit 1
+    fi
     cd ..
 fi
 done
@@ -67,6 +91,12 @@ echo "applying service_account module"
 sleep 5
 cd service_account
 terragrunt apply --auto-approve
+if [ $? -eq 0 ]; then
+  echo "Terragrunt apply was successful."
+else
+  echo "Terragrunt apply failed at service_account provisioning"
+  exit 1
+fi
 cd ..
 sleep 20
 isNodeReady=$(kubectl get nodes | grep "NotReady")
@@ -83,6 +113,12 @@ sleep 5
 cd argocd
 find . -type f -exec sed -i 's/<aws-region>/'"$aws_region_name"'/g' {} +
 terragrunt apply --auto-approve
+if [ $? -eq 0 ]; then
+  echo "Terragrunt apply was successful."
+else
+  echo "Terragrunt apply failed at argocd provisioning"
+  exit 1
+fi
 cd ..
 
 echo "creating foudational layers manifest in git"
@@ -97,12 +133,24 @@ echo "applying argoapps module"
 sleep 5
 cd argoapps
 terragrunt apply --auto-approve
+if [ $? -eq 0 ]; then
+  echo "Terragrunt apply was successful."
+else
+  echo "Terragrunt apply failed at argoapps provisioning"
+  exit 1
+fi
 cd ..
 
 echo "applying private_dns_zone module"
 sleep 5
 cd private_dns_zone
 terragrunt apply --auto-approve
+if [ $? -eq 0 ]; then
+  echo "Terragrunt apply was successful."
+else
+  echo "Terragrunt apply failed at private_dns_zone provisioning"
+  exit 1
+fi
 cd ..
 
 
