@@ -68,6 +68,13 @@ else
   awk -v existing_igw_id="$existing_igw_id" '/existing_igw_id[[:blank:]]*=/{gsub(/".*"/, "\"" existing_igw_id "\"")} 1' ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
 fi
 
+# Check if 'existing_igw_id' variable is empty
+if [[ -z $default_vpc ]]; then
+  echo "default_vpc is not set in apply.conf file."
+else
+  awk -v default_vpc="$default_vpc" '/default_vpc[[:blank:]]*=/{gsub(/".*"/, "\"" default_vpc "\"")} 1' ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
+fi
+
 # Check if 'vpc_cidr_block' variable is empty
 if [[ -z $vpc_cidr_block ]]; then
   echo "vpc_cidr_block is not set in apply.conf file."
@@ -102,7 +109,6 @@ fi
 
 if [[ -z $cluster_EIP ]]; then
   echo "cluster_EIP is not set in apply.conf file."
-  exit 1
 else
   awk -v cluster_EIP="$cluster_EIP" '/cluster_EIP[[:blank:]]*=/{gsub(/\[.*\]/, cluster_EIP)} 1' ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
 fi
@@ -116,7 +122,7 @@ fi
 
 if [[ -z $worker_EIP ]]; then
   echo "worker_EIP is not set in apply.conf file."
-  exit 1
+
 else
   awk -v worker_EIP="$worker_EIP" '/worker_EIP[[:blank:]]*=/{gsub(/\[.*\]/, worker_EIP)} 1' ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
 fi
@@ -140,6 +146,27 @@ if [[ -z $workernode_cidr ]]; then
   exit 1
 else
   awk -v workernode_cidr="$workernode_cidr" '/workernode_cidr[[:blank:]]*=/{gsub(/\[.*\]/, workernode_cidr)} 1' ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
+fi 
+
+if [[ -z $keyname ]]; then
+  echo "keyname is not set in apply.conf file."
+  exit 1
+else
+  awk -v keyname="$keyname" '/keyname[[:blank:]]*=/{gsub(/".*"/, "\"" keyname "\"")} 1' ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
+fi 
+
+if [[ -z $istio_apply_module ]]; then
+  echo "istio_apply_module is not set in apply.conf file."
+  exit 1
+else
+  awk -v istio_apply_module="$istio_apply_module" '/istio_apply_module[[:blank:]]*=/{gsub(/".*"/, "\"" istio_apply_module "\"")} 1' ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
+fi 
+
+if [[ -z $ami_id ]]; then
+  echo "ami_id is not set in apply.conf file."
+  exit 1
+else
+  awk -v ami_id="$ami_id" '/ami_id[[:blank:]]*=/{gsub(/".*"/, "\"" ami_id "\"")} 1' ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
 fi 
 
 echo "#########################"
