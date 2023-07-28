@@ -152,7 +152,7 @@ locals {
   }
 
   secrets_manager = {
-    name = <secrets-store-name>
+    name = "<secrets-store-name>"
   }
 
   private_hosted_zone = {
