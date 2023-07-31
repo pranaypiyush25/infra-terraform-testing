@@ -89,8 +89,9 @@ locals {
   argocd = {
     version_argocd              = "5.5.3"
     istio_apply_module          = "false"
-    foundationlayer_namespace   = [ { "namespace_name" : "argocd" }] 
-    app_namespace               = [] #please provide if extra namespaces are required
+    foundationlayer_namespace   = [{ "namespace_name" : "argocd" },{ "namespace_name" : "istio-system" },{ "namespace_name" : "istio-gateway" }] 
+    app_namespace               = [{"namespace_name" : "core" },{ "namespace_name" : "io" },
+                                { "namespace_name" : "ia" },{ "namespace_name" : "istio-ingress" },{ "namespace_name" : "ui" }, { "namespace_name" : "testing" }] 
   }
 
   mongodbatlas = {
