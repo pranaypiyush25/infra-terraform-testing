@@ -148,11 +148,12 @@ else
   awk -v workernode_cidr="$workernode_cidr" '/workernode_cidr[[:blank:]]*=/{gsub(/\[.*\]/, workernode_cidr)} 1' ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
 fi 
 
-if [[ -z $keyname ]]; then
+if [[ -z $key_pair_name ]]; then
   echo "keyname is not set in apply.conf file."
   exit 1
 else
-  awk -v keyname="$keyname" '/keyname[[:blank:]]*=/{gsub(/".*"/, "\"" keyname "\"")} 1' ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
+  # awk -v keyname="$keyname" '/keyname[[:blank:]]*=/{gsub(/".*"/, "\"" keyname "\"")} 1' ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
+  sed "s|<key-pair-name>|$key_pair_name|" ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
 fi 
 
 if [[ -z $istio_apply_module ]]; then
@@ -169,10 +170,19 @@ else
   awk -v ami_id="$ami_id" '/ami_id[[:blank:]]*=/{gsub(/".*"/, "\"" ami_id "\"")} 1' ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
 fi 
 
+if [[ -z $secrets_manager_name ]]; then
+  echo "secrets_manager_name is not set in apply.conf file."
+  exit 1
+else
+  # awk -v secrets_manager_name="$secrets_manager_name" '/name[[:blank:]]*=/{gsub(/".*"/, "\"" secrets_manager_name "\"")} 1' ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
+  sed "s|<secrets-store-name>|$secrets_manager_name|" ./terragrunt.hcl > temp_terragrunt.hcl && mv temp_terragrunt.hcl terragrunt.hcl
+fi 
+
 echo "#########################"
 echo "pushig $new_env files to git"
 git config --global user.name "iac-setup"
 git config --global user.email iac-setup
+exit 1
 git add ../$new_env
 git commit -m "adding $new_env"
 git push
