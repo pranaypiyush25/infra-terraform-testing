@@ -58,7 +58,6 @@ echo ""
 echo "recursively updating placeholder <aws certificate arn>"
 if [[ -z $$aws_certificate_arn ]]; then
   echo "aws_certificate_arn is not set in apply.conf file."
-  exit 1
 else
   find . -type f -exec sed -i 's/<aws certificate arn>/'"$aws_certificate_arn"'/g' {} +
 fi
