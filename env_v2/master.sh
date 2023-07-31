@@ -43,7 +43,7 @@ fi
 
 trimmed_cluster_AZ=$(echo "$cluster_AZ" | tr -d " '")
 number_of_values=$(echo "$trimmed_cluster_AZ" | jq length)
-cluster_ip_addresses="["
+cluster_ip_addresses="'["
 
 for ((i=1; i<=$number_of_values; i++)); do
   response=$(aws ec2 allocate-address --tag-specifications "ResourceType=elastic-ip,Tags=[{Key=Name,Value=$new_env-eks-cluster-$i}]")
@@ -60,7 +60,7 @@ for ((i=1; i<=$number_of_values; i++)); do
     fi
   fi
 done
-cluster_ip_addresses+="]"
+cluster_ip_addresses+="]'"
 echo "cluster_EIP=$cluster_ip_addresses" >> ./inputs/apply.conf
 
 ##################################
@@ -69,7 +69,7 @@ echo "cluster_EIP=$cluster_ip_addresses" >> ./inputs/apply.conf
 
 trimmed_worker_AZ=$(echo "$worker_AZ" | tr -d " '")
 number_of_values=$(echo "$trimmed_worker_AZ" | jq length)
-worker_ip_addresses="["
+worker_ip_addresses="'["
 
 for ((i=1; i<=$number_of_values; i++)); do
   response=$(aws ec2 allocate-address --tag-specifications "ResourceType=elastic-ip,Tags=[{Key=Name,Value=$new_env-eks-worker-$i}]")
@@ -86,7 +86,7 @@ for ((i=1; i<=$number_of_values; i++)); do
     fi
   fi
 done
-worker_ip_addresses+="]"
+worker_ip_addresses+="]'"
 echo "worker_EIP=$cluster_ip_addresses" >> ./inputs/apply.conf
 
 ##################################
