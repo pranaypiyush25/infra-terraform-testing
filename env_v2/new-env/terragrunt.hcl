@@ -6,7 +6,7 @@ remote_state {
   }
   config = {
 
-    bucket = "integrator-<new-env>-terragrunt-terraform-eks-state-<region-name>" # Bucket Name to Store State file
+    bucket = "integrator-<new-env>-terraform-eks-state-<region-name>" # Bucket Name to Store State file
 
     key = "${path_relative_to_include()}/terraform.tfstate"
     region         = "<region-name>" # Bucket Region
