@@ -82,12 +82,12 @@ for ((i=1; i<=$number_of_values; i++)); do
 
     # Add a comma after each IP address except for the last one
     if [ $i -ne $number_of_values ]; then
-      cluster_ip_addresses+=","
+      worker_ip_addresses+=","
     fi
   fi
 done
 worker_ip_addresses+="]'"
-echo "worker_EIP=$cluster_ip_addresses" >> ./inputs/apply.conf
+echo "worker_EIP=$worker_ip_addresses" >> ./inputs/apply.conf
 
 ##################################
 #############
