@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 source inputs/apply.conf
 currentPath=$(pwd)
 cd ../..
