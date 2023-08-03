@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 source inputs/apply.conf
 
 # Check if 'new_env' variable is empty
