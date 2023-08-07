@@ -6,14 +6,8 @@ include {
   path = find_in_parent_folders()
 }
 
-locals {
-  eks_modules = filesetlist("../eks", "*")
-}
-
-dependencies "eks" {
-  for_each = { for module_path in local.eks_modules : module_path => module_path }
-
-  config_path = each.key
+dependency "eks" {
+  config_path = ["../eks/eks_controlplane","../eks/eks_worker_foundational_layer","../eks/eks_worker_foundational_layer"]
 }
 
 locals {
