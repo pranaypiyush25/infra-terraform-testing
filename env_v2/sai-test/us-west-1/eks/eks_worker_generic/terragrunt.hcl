@@ -33,4 +33,5 @@ inputs = {
   min_instance_count    = local.account_vars.locals.worker.generic.min_instance_count
   max_instance_count    = local.account_vars.locals.worker.generic.max_instance_count
   desired_instance_count= local.account_vars.locals.worker.generic.desired_instance_count
+  workernode_cidr       = local.account_vars.locals.vpc.subnet.workernode_cidr
 }
