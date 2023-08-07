@@ -7,6 +7,7 @@ include {
 }
 dependency "argocd" {
   config_path = "../argocd"
+  skip_outputs = "true"
 }
 
 locals {
