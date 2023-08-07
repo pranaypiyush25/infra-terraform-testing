@@ -42,13 +42,13 @@ locals {
     create_igw        = "true"   # false if no new-vpc/default-vpc needed
     subnet = {
       name_prefix                          = "sai-test-aws-eks-us-west-1"
-      cluster_AZ                           = [ ]         # list the cluster AZ,      i.e   "ap-south-1a","ap-south-1b"
-      cluster_EIP                          = [ ]         # list the exisitng EIPs,   i.e   "20.20.20.20", "30.30.30.30"
-      worker_AZ                            = [ ]         # list the worker AZ,       i.e   "ap-south-1a","ap-south-1b"
-      worker_EIP                           = [ ]         # list the exisitng EIPs,   i.e   "20.20.20.20", "30.30.30.30"
-      public_nat_cidr                      = [ ]         # list the Public CIDR,     i.e   "172.31.250.0/24", "172.31.251.0/24"
-      cluster_cidr                         = [ ]         # list the Cluster CIDR,    i.e   "172.31.120.0/24", "172.31.121.0/24"
-      workernode_cidr                      = [ ]         # list the Worker CIDR,     i.e   "172.31.130.0/24", "172.31.131.0/24"
+      cluster_AZ                           = ["us-west-1a","us-west-1c"]        # list the cluster AZ,      i.e   "ap-south-1a","ap-south-1b"
+      cluster_EIP                          = [ "54.241.168.217", "54.219.143.108"]         # list the exisitng EIPs,   i.e   "20.20.20.20", "30.30.30.30"
+      worker_AZ                            = ["us-west-1a","us-west-1c"]         # list the worker AZ,       i.e   "ap-south-1a","ap-south-1b"
+      worker_EIP                           = [ "54.176.115.123", "54.67.47.121"]         # list the exisitng EIPs,   i.e   "20.20.20.20", "30.30.30.30"
+      public_nat_cidr                      = ["172.31.140.0/24", "172.31.141.0/24"]        # list the Public CIDR,     i.e   "172.31.250.0/24", "172.31.251.0/24"
+      cluster_cidr                         = ["172.31.120.0/24", "172.31.121.0/24"]         # list the Cluster CIDR,    i.e   "172.31.120.0/24", "172.31.121.0/24"
+      workernode_cidr                      =  ["172.31.130.0/24", "172.31.131.0/24"]        # list the Worker CIDR,     i.e   "172.31.130.0/24", "172.31.131.0/24"
     }
     tags = {  
       SERVICENAME    = "sai-test"
@@ -56,7 +56,7 @@ locals {
   }
   
   worker = {
-    keyname                               = "<key-pair-name>"     # create ssh key name and update
+    keyname                               = "integrator-sai-test"     # create ssh key name and update
     generic = {
       instance_type                        = "t3.large"
       asg_prefix                           = "generic"
@@ -88,72 +88,10 @@ locals {
 
   argocd = {
     version_argocd              = "5.5.3"
-    istio_apply_module          = "false"
+    istio_apply_module          = "true"
     foundationlayer_namespace   = [{ "namespace_name" : "argocd" },{ "namespace_name" : "istio-system" },{ "namespace_name" : "istio-gateway" }] 
     app_namespace               = [{"namespace_name" : "core" },{ "namespace_name" : "io" },
                                 { "namespace_name" : "ia" },{ "namespace_name" : "istio-ingress" },{ "namespace_name" : "ui" }, { "namespace_name" : "testing" }] 
-  }
-
-  mongodbatlas = {
-    access = {
-      name = ""
-      tags = {
-        Name = "MongoDB Atlas Access for sai-test"
-      }
-    }
-    org_id = "5d1b2061d5ec130eb8a22c12"
-    project = {
-      name = "sai-test"
-      cluster = {
-        name = "sai-test"
-        mongo_db_major_version = "4.4"
-        provider_instance_size_name = "M10"
-        disk_size_gb = 40
-      }
-    }
-  }
-
-  elasticache = {
-    subnet_groups = {
-      name = "elasticache-sai-test"
-    }
-    redis-server = {
-      name = "redis-server-sai-test"
-      tags = {
-        Name = "ElasticCache Redis Server for sai-test"
-      }
-    }
-    replication_groups = {
-      id = "redis-server-sai-test"
-      num_node_groups = 1
-      replicas_per_node_group = 1
-      port = 6379
-      automatic_failover_enabled = true
-      at_rest_encryption_enabled = true
-      multi_az_enabled = true
-      node_type = ""
-      engine_version = "5.0.6"
-      parameter_group_name = "default.redis5.0"
-      snapshot_retention_limit = 0
-      transit_encryption_enabled = true
-      snapshot_window = "07:00-08:00"
-      maintenance_window = "mon:06:00-mon:07:00"
-    }
-  }
-
-  opensearch = {
-    domain_name = "sai-test"
-    instance_type = "m6g.large.search"
-    instance_count = 2
-    engine_version = "OpenSearch_2.5"
-    volume_size = 100
-    tags = {
-      Name = "OpenSearch Service for sai-test"
-    }
-  }
-
-  secrets_manager = {
-    name = "<secrets-store-name>"
   }
 
   private_hosted_zone = {
