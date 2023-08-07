@@ -7,7 +7,7 @@ include {
 }
 
 dependency "eks" {
-  config_path = ["../eks/eks_controlplane","../eks/eks_worker_foundational_layer","../eks/eks_worker_foundational_layer"]
+  paths = ["../eks/eks_controlplane","../eks/eks_worker_foundational_layer","../eks/eks_worker_foundational_layer"]
 }
 
 locals {
