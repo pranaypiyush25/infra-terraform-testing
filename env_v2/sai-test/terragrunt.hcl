@@ -38,8 +38,8 @@ locals {
     existing_igw_id   = ""       # provide igw-id to use existing vpc
     default_vpc       = "true"  # true to use default_vpc
     vpc_cidr_block    = "172.31.0.0/16"       # must need to be provided
-    create_vpc        = "true"   # false if no new-vpc/default-vpc needed
-    create_igw        = "true"   # false if no new-vpc/default-vpc needed
+    create_vpc        = "false"   # false if no new-vpc/default-vpc needed
+    create_igw        = "false"   # false if no new-vpc/default-vpc needed
     subnet = {
       name_prefix                          = "sai-test-aws-eks-us-west-1"
       cluster_AZ                           = ["us-west-1a","us-west-1c"]        # list the cluster AZ,      i.e   "ap-south-1a","ap-south-1b"
