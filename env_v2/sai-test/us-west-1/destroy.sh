@@ -57,7 +57,8 @@ while [ "$exit_selected" = false ]; do
       ;;
     6)
       cd argocd
-      kubectl patch service -n argocd argocd-server --type=json -p='[{"op": "remove", "path": "/metadata/finalizers"}]' --dry-run=client -o yaml > tmp_patch.yamlkubectl apply -f tmp_patch.yaml
+      kubectl patch service -n argocd argocd-server --type=json -p='[{"op": "remove", "path": "/metadata/finalizers"}]' --dry-run=client -o yaml > tmp_patch.yaml
+      kubectl apply -f tmp_patch.yaml
       rm tmp_patch.yaml
       terragrunt destroy
       cd ..
