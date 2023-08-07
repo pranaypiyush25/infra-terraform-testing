@@ -37,7 +37,7 @@ locals {
     existing_vpc_id   = ""       # provide vpc-id to use existing vpc 
     existing_igw_id   = ""       # provide igw-id to use existing vpc
     default_vpc       = "true"  # true to use default_vpc
-    vpc_cidr_block    = ""       # must need to be provided
+    vpc_cidr_block    = "172.31.0.0/16"       # must need to be provided
     create_vpc        = "true"   # false if no new-vpc/default-vpc needed
     create_igw        = "true"   # false if no new-vpc/default-vpc needed
     subnet = {
