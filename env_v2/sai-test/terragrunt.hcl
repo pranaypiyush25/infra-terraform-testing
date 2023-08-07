@@ -89,7 +89,7 @@ locals {
   argocd = {
     version_argocd              = "5.5.3"
     istio_apply_module          = "true"
-    aws_secretsmanager_name     = "eks-provisioning"
+    aws_secretsmanager_name     = "arn:aws:secretsmanager:us-west-1:341118756977:secret:eks-provisioning-rFaxUl"
     foundationlayer_namespace   = [{ "namespace_name" : "argocd" },{ "namespace_name" : "istio-system" },{ "namespace_name" : "istio-gateway" }] 
     app_namespace               = [{"namespace_name" : "core" },{ "namespace_name" : "io" },
                                 { "namespace_name" : "ia" },{ "namespace_name" : "istio-ingress" },{ "namespace_name" : "ui" }, { "namespace_name" : "testing" }] 
