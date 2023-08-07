@@ -6,7 +6,7 @@ include {
   path = find_in_parent_folders()
 }
 
-dependency "eks" {
+dependencies {
   paths = ["../eks/eks_controlplane","../eks/eks_worker_foundational_layer","../eks/eks_worker_foundational_layer"]
 }
 
