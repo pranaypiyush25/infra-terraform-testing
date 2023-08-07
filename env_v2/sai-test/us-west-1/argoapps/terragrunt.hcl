@@ -5,8 +5,8 @@ terraform {
 include {
   path = find_in_parent_folders()
 }
-dependency "argoapps" {
-  config_path = "../argoapps"
+dependency "argocd" {
+  config_path = "../argocd"
 }
 
 locals {
