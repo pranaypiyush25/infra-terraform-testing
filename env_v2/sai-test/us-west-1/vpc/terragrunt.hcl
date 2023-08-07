@@ -9,6 +9,9 @@ include {
 locals {
   account_vars = read_terragrunt_config(find_in_parent_folders("terragrunt.hcl"))
 }
+dependency "iam_role" {
+  config_path = "../iam_role"
+}
 
 inputs = {
   tags                = local.account_vars.locals.vpc.tags

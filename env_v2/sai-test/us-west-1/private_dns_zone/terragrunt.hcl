@@ -5,6 +5,9 @@ terraform {
 include {
   path = find_in_parent_folders()
 }
+dependency "argoapps" {
+  config_path = "../argoapps"
+}
 
 locals {
   account_vars = read_terragrunt_config(find_in_parent_folders("terragrunt.hcl"))

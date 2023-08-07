@@ -6,6 +6,10 @@ include {
   path = find_in_parent_folders()
 }
 
+dependency "eks" {
+  config_path = "../eks"
+}
+
 locals {
   account_vars = read_terragrunt_config(find_in_parent_folders("terragrunt.hcl"))
 }
