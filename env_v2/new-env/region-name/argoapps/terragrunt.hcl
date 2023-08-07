@@ -15,4 +15,5 @@ inputs = {
   region             = local.account_vars.locals.region
   cluster_name       = local.account_vars.locals.cluster_name
   istio_apply_module = local.account_vars.locals.argocd.istio_apply_module
+  aws_secretsmanager_arn = local.account_vars.locals.argocd.aws_secretsmanager_arn
 }

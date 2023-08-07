@@ -87,6 +87,7 @@ locals {
   }
 
   argocd = {
+    aws_secretsmanager_arn      = ""
     version_argocd              = "5.5.3"
     istio_apply_module          = "false"
     foundationlayer_namespace   = [{ "namespace_name" : "argocd" },{ "namespace_name" : "istio-system" },{ "namespace_name" : "istio-gateway" }] 
