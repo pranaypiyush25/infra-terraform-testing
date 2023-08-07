@@ -43,12 +43,12 @@ locals {
     subnet = {
       name_prefix                          = "sai-test-aws-eks-us-west-1"
       cluster_AZ                           = ["us-west-1a","us-west-1c"]        # list the cluster AZ,      i.e   "ap-south-1a","ap-south-1b"
-      cluster_EIP                          = [ "54.241.168.217", "54.219.143.108"]         # list the exisitng EIPs,   i.e   "20.20.20.20", "30.30.30.30"
+      cluster_EIP                          = ["54.241.168.217", "54.219.143.108"]         # list the exisitng EIPs,   i.e   "20.20.20.20", "30.30.30.30"
       worker_AZ                            = ["us-west-1a","us-west-1c"]         # list the worker AZ,       i.e   "ap-south-1a","ap-south-1b"
       worker_EIP                           = [ "54.176.115.123", "54.67.47.121"]         # list the exisitng EIPs,   i.e   "20.20.20.20", "30.30.30.30"
       public_nat_cidr                      = ["172.31.170.0/24", "172.31.171.0/24"]        # list the Public CIDR,     i.e   "172.31.250.0/24", "172.31.251.0/24"
       cluster_cidr                         = ["172.31.180.0/24", "172.31.181.0/24"]         # list the Cluster CIDR,    i.e   "172.31.120.0/24", "172.31.121.0/24"
-      workernode_cidr                      =  ["172.31.190.0/24", "172.31.191.0/24"]        # list the Worker CIDR,     i.e   "172.31.130.0/24", "172.31.131.0/24"
+      workernode_cidr                      = ["172.31.190.0/24", "172.31.191.0/24"]        # list the Worker CIDR,     i.e   "172.31.130.0/24", "172.31.131.0/24"
     }
     tags = {  
       SERVICENAME    = "sai-test"
