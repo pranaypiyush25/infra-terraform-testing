@@ -57,11 +57,23 @@ while [ "$exit_selected" = false ]; do
       ;;
     6)
       cd argocd
+      kubectl patch service -n argocd argocd-server --type=json -p='[{"op": "remove", "path": "/metadata/finalizers"}]' --dry-run=client -o yaml > tmp_patch.yamlkubectl apply -f tmp_patch.yaml
+      rm tmp_patch.yaml
       terragrunt destroy
       cd ..
       ;;
     7)
       cd argoapps
+      FINALIZER_TO_REMOVE="resources-finalizer.argocd.argoproj.io"
+      APPLICATION_NAMES=$(kubectl get applications -n argocd -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}')
+      for app_name in $APPLICATION_NAMES; do
+        kubectl patch application -n argocd $app_name --type=json -p='[{"op": "remove", "path": "/metadata/finalizers"}]' --dry-run=client -o yaml > tmp_patch.yaml
+        if grep -q "$FINALIZER_TO_REMOVE" tmp_patch.yaml; then
+          kubectl apply -f tmp_patch.yaml
+        fi
+        rm tmp_patch.yaml
+      done
+
       terragrunt destroy
       cd ..
       ;;
