@@ -13,6 +13,9 @@ locals {
 dependency "vpc" {
   config_path = "../../vpc"
 }
+dependency "eks_controlplane" {
+  config_path = "../eks_controlplane"
+}
 
 inputs = {
   vpc_id                = dependency.vpc.outputs.vpc_id 
