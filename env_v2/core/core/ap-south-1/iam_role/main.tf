@@ -19,5 +19,5 @@ module "iamrole" {
   region                = var.region
   global_tags           = var.global_tags
   create_app_env_bucket = var.create_app_env_bucket
-  service_linked_role_suffix = var.env
+  service_linked_role_suffix = ""
 }
