@@ -1,5 +1,7 @@
-module "iamrole" {
-  source = "/home/ec2-user/code-sai-test/infra-terraform//modules_v2/iam_roles"
+terraform {
+  module "iamrole" {
+    source = "/home/ec2-user/code-sai-test/infra-terraform//modules_v2/iam_roles"
+  }
 }
 
 include {
