@@ -1,7 +1,8 @@
 variable "region" {}
 variable "env" {}
 variable "global_tags" {
-    default = {}
+  description = "Map of global tags to be added"
+  type        = map(string)
 }
 variable "create_app_env_bucket" {}
 variable "service_linked_role_suffix" {}
