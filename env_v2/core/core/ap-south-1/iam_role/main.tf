@@ -1,6 +1,8 @@
 variable "region" {}
 variable "env" {}
-variable "global_tags" {}
+variable "global_tags" {
+    default = {}
+}
 variable "create_app_env_bucket" {}
 variable "service_linked_role_suffix" {}
 
