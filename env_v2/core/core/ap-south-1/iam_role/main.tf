@@ -17,7 +17,7 @@ module "iamrole" {
   source = "/home/ec2-user/code-sai-test/infra-terraform//modules_v2/iam_roles"
   env                   = var.env
   region                = var.region
-  global_tags           = var.global_tags
+  global_tags           = {}
   create_app_env_bucket = var.create_app_env_bucket
   service_linked_role_suffix = ""
 }
